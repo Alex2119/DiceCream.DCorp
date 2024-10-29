@@ -14,5 +14,7 @@ namespace DiceCream.DCorp.Domain.Entities
         public string PreciseEffect { get; set; }
         public string GlobalEffect { get; set; }
         public int RequiredXp {  get; set; }
+
+        public ICollection<PlayerBuildingContribution> PlayerContributions { get; set; } = [];
     }
 }

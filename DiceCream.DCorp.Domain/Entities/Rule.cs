@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiceCream.DCorp.Domain.Entities
 {
-    public class Rules
+    public class Rule
     {
         public int Id { get; set; }
         public string Content { get; set; }

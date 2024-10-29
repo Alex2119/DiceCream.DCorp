@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Domain", "DiceCream.DCorp.Domain\DiceCream.DCorp.Domain.csproj", "{9D467B9C-3157-46CB-9A54-01DAE75797C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiceCream.DCorp.Domain", "DiceCream.DCorp.Domain\DiceCream.DCorp.Domain.csproj", "{9D467B9C-3157-46CB-9A54-01DAE75797C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Infrastructure", "DiceCream.DCorp.Infrastructure\DiceCream.DCorp.Infrastructure.csproj", "{A81C5CAA-9332-4138-98C7-53BF5934D8EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9D467B9C-3157-46CB-9A54-01DAE75797C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D467B9C-3157-46CB-9A54-01DAE75797C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D467B9C-3157-46CB-9A54-01DAE75797C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A81C5CAA-9332-4138-98C7-53BF5934D8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A81C5CAA-9332-4138-98C7-53BF5934D8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A81C5CAA-9332-4138-98C7-53BF5934D8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A81C5CAA-9332-4138-98C7-53BF5934D8EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

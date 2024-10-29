@@ -10,9 +10,11 @@ namespace DiceCream.DCorp.Domain.Entities
         private DateTime LastSession { get; set; }
         private int Xp { get; set; }
         private int Sp { get; set; }
-        public List<Session> SessionHistory { get; set; }
-        CompetencesAchetees(liste de Competence) { get; set; }
+        public List<Session> SessionHistory { get; set; } = [];
+        public List<Skill> AcquiredSkills { get; set; } = [];
         public Statistic Stats { get; set; }
         private int PointsDeVie { get; set; }
-}
+
+        public ICollection<PlayerBuildingContribution> BuildingContributions { get; set; } = [];
+    }
 }
