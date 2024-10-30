@@ -9,6 +9,7 @@ namespace DiceCream.DCorp.Domain.Entities
 {
     public class Statistic
     {
+        public int Id { get; set; }
         public int Strength { get; set; }
         public int Endurance { get; set; }
         public int Charisma { get; set; }

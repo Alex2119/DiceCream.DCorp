@@ -5,8 +5,10 @@ namespace DiceCream.DCorp.Domain.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public Player Players { get; set; }
-        public DungeonMaster DungeonMaster { get; set; }
-        public string Feedback { get; set; }
+        public PlayerProfile PlayerProfiles { get; set; } = new();
+        public int DungeonMasterProfileId { get; set; }
+        public DungeonMasterProfile DungeonMaster { get; set; }
+        public ICollection<User> Participants { get; set; } = [];
+        public string? Feedback { get; set; }
     }
 }

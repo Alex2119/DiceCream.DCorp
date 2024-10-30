@@ -1,0 +1,6 @@
+@DiceCream.DCorp.Application_HostAddress = http://localhost:5014
+
+GET {{DiceCream.DCorp.Application_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
