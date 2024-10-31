@@ -51,6 +51,10 @@ namespace DiceCream.DCorp.Infrastructure
                 .WithOne(ps => ps.PlayerProfile)
                 .HasForeignKey(ps => ps.PlayerProfileId);
 
+            modelBuilder.Entity<Session>()
+                .HasMany(s => s.Participants)
+                .WithMany(u => u.SessionHistory);
+
             // Configure User <-> PlayerProfile relationship
             modelBuilder.Entity<PlayerProfile>()
             .HasKey(pp => pp.Id);
@@ -74,9 +78,9 @@ namespace DiceCream.DCorp.Infrastructure
 
             // Relation entre PlayerProfile et Statistic
             modelBuilder.Entity<PlayerProfile>()
-                .HasOne(p => p.Statistics)
-                .WithOne() // Assuming Statistic doesn’t need a reference back to PlayerProfile
-                .HasForeignKey<PlayerProfile>(p => p.Id); // Assuming PlayerProfile has a StatsId FK
+                .HasMany(p => p.Stats)
+                .WithOne(ps => ps.PlayerProfile)
+                .HasForeignKey(ps => ps.PlayerProfileId);
 
             modelBuilder.Entity<PlayerSkill>()
                 .HasKey(ps => new { ps.PlayerProfileId, ps.SkillId });
@@ -104,13 +108,9 @@ namespace DiceCream.DCorp.Infrastructure
                 .HasKey(ps => new { ps.PlayerProfileId, ps.StatisticId });
 
             modelBuilder.Entity<PlayerStatistic>()
-                .HasOne(ps => ps.PlayerProfile);
-
-            modelBuilder.Entity<PlayerStatistic>()
                 .HasOne(ps => ps.PlayerProfile)
-                .WithMany(p => p.Stats)  // Correction: Utilisation de PlayerStatistics
+                .WithMany(p => p.Stats)
                 .HasForeignKey(ps => ps.PlayerProfileId);
-                
 
             modelBuilder.Entity<PlayerStatistic>()
                 .HasOne(ps => ps.Statistic)

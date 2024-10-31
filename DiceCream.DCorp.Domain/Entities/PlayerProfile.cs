@@ -16,6 +16,6 @@ namespace DiceCream.DCorp.Domain.Entities
         public int UserId { get; set; }
         public User User { get; set; }
         public List<PlayerSkill> PlayerSkills { get; set; }
-        public ICollection<Statistic> Stats { get; set; }
+        public ICollection<PlayerStatistic> Stats { get; set; }
     }
 }
