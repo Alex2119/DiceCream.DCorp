@@ -16,103 +16,103 @@ namespace DiceCream.DCorp.Infrastructure
         public DbSet<PlayerProfile> PlayerProfiles { get; set; }
         public DbSet<DungeonMasterProfile> DungeonMasterProfiles { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
             // PlayerBuildingContribution relationships
-            modelBuilder.Entity<PlayerBuildingContribution>()
+            builder.Entity<PlayerBuildingContribution>()
                 .HasKey(pc => new { pc.UserId, pc.BuildingId });
 
-            modelBuilder.Entity<PlayerBuildingContribution>()
+            builder.Entity<PlayerBuildingContribution>()
                 .HasOne(pc => pc.User)
                 .WithMany(u => u.PlayerBuildingContributions)
                 .HasForeignKey(pc => pc.UserId);
 
-            modelBuilder.Entity<PlayerBuildingContribution>()
+            builder.Entity<PlayerBuildingContribution>()
                 .HasOne(pc => pc.Building)
                 .WithMany(b => b.PlayerContributions)
                 .HasForeignKey(pc => pc.BuildingId);
 
             // Identity User-Role configuration
-            modelBuilder.Entity<UserRole>()
+            builder.Entity<UserRole>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.UserRoles)
                 .HasForeignKey(ur => ur.UserId);
 
-            modelBuilder.Entity<UserRole>()
+            builder.Entity<UserRole>()
                 .HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
 
             // Relation entre PlayerProfile et Skill
-            modelBuilder.Entity<PlayerProfile>()
+            builder.Entity<PlayerProfile>()
                 .HasMany(p => p.PlayerSkills)
                 .WithOne(ps => ps.PlayerProfile)
                 .HasForeignKey(ps => ps.PlayerProfileId);
 
-            modelBuilder.Entity<Session>()
+            builder.Entity<Session>()
                 .HasMany(s => s.Participants)
                 .WithMany(u => u.SessionHistory);
 
             // Configure User <-> PlayerProfile relationship
-            modelBuilder.Entity<PlayerProfile>()
+            builder.Entity<PlayerProfile>()
             .HasKey(pp => pp.Id);
 
-            modelBuilder.Entity<User>()
+            builder.Entity<User>()
                 .HasOne(u => u.PlayerProfile)
                 .WithOne(p => p.User)
                 .HasForeignKey<PlayerProfile>(p => p.UserId);
 
             // Configure User <-> DungeonMasterProfile relationship
-            modelBuilder.Entity<User>()
+            builder.Entity<User>()
                 .HasOne(u => u.DungeonMasterProfile)
                 .WithOne(d => d.User)
                 .HasForeignKey<DungeonMasterProfile>(d => d.UserId);
 
             // Relation entre DungeonMasterProfile et Session
-            modelBuilder.Entity<Session>()
+            builder.Entity<Session>()
                 .HasOne(s => s.DungeonMaster)
                 .WithMany(d => d.SessionDirected)
                 .HasForeignKey(s => s.DungeonMasterProfileId);
 
             // Relation entre PlayerProfile et Statistic
-            modelBuilder.Entity<PlayerProfile>()
+            builder.Entity<PlayerProfile>()
                 .HasMany(p => p.Stats)
                 .WithOne(ps => ps.PlayerProfile)
                 .HasForeignKey(ps => ps.PlayerProfileId);
 
-            modelBuilder.Entity<PlayerSkill>()
+            builder.Entity<PlayerSkill>()
                 .HasKey(ps => new { ps.PlayerProfileId, ps.SkillId });
 
-            modelBuilder.Entity<PlayerSkill>()
+            builder.Entity<PlayerSkill>()
                 .HasOne(ps => ps.PlayerProfile)
                 .WithMany(p => p.PlayerSkills)  // Navigation dans PlayerProfile
                 .HasForeignKey(ps => ps.PlayerProfileId);
 
-            modelBuilder.Entity<PlayerSkill>()
+            builder.Entity<PlayerSkill>()
                 .HasOne(ps => ps.Skill)
                 .WithMany(s => s.AssignedToPlayers)  // Navigation dans Skill
                 .HasForeignKey(ps => ps.SkillId);
 
-            modelBuilder.Entity<Session>()
+            builder.Entity<Session>()
                 .HasOne(s => s.DungeonMaster)
                 .WithMany(dm => dm.SessionDirected)  // Le DM peut diriger plusieurs sessions
                 .HasForeignKey(s => s.DungeonMasterProfileId);
 
-            modelBuilder.Entity<Session>()
+            builder.Entity<Session>()
                 .HasMany(s => s.Participants)  // Participants est une collection de `User`
                 .WithMany(u => u.SessionHistory);  // User peut être dans plusieurs sessions
 
-            modelBuilder.Entity<PlayerStatistic>()
+            builder.Entity<PlayerStatistic>()
                 .HasKey(ps => new { ps.PlayerProfileId, ps.StatisticId });
 
-            modelBuilder.Entity<PlayerStatistic>()
+            builder.Entity<PlayerStatistic>()
                 .HasOne(ps => ps.PlayerProfile)
                 .WithMany(p => p.Stats)
                 .HasForeignKey(ps => ps.PlayerProfileId);
 
-            modelBuilder.Entity<PlayerStatistic>()
+            builder.Entity<PlayerStatistic>()
                 .HasOne(ps => ps.Statistic)
                 .WithMany()
                 .HasForeignKey(ps => ps.StatisticId);
