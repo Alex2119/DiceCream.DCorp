@@ -332,8 +332,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                         name: "FK_Sessions_DungeonMasterProfiles_DungeonMasterProfileId",
                         column: x => x.DungeonMasterProfileId,
                         principalTable: "DungeonMasterProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Sessions_PlayerProfiles_PlayerProfilesId",
                         column: x => x.PlayerProfilesId,
@@ -365,27 +364,25 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SessionUser",
+                name: "SessionParticipant",
                 columns: table => new
                 {
-                    ParticipantsId = table.Column<int>(type: "int", nullable: false),
-                    SessionHistoryId = table.Column<int>(type: "int", nullable: false)
+                    SessionId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SessionUser", x => new { x.ParticipantsId, x.SessionHistoryId });
+                    table.PrimaryKey("PK_SessionParticipant", x => new { x.SessionId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_SessionUser_AspNetUsers_ParticipantsId",
-                        column: x => x.ParticipantsId,
+                        name: "FK_SessionParticipant_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SessionUser_Sessions_SessionHistoryId",
-                        column: x => x.SessionHistoryId,
+                        name: "FK_SessionParticipant_Sessions_SessionId",
+                        column: x => x.SessionId,
                         principalTable: "Sessions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -486,6 +483,11 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SessionParticipant_UserId",
+                table: "SessionParticipant",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sessions_DungeonMasterProfileId",
                 table: "Sessions",
                 column: "DungeonMasterProfileId");
@@ -494,11 +496,6 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 name: "IX_Sessions_PlayerProfilesId",
                 table: "Sessions",
                 column: "PlayerProfilesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SessionUser_SessionHistoryId",
-                table: "SessionUser",
-                column: "SessionHistoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Skills_PlayerProfileId",
@@ -537,7 +534,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 name: "Rules");
 
             migrationBuilder.DropTable(
-                name: "SessionUser");
+                name: "SessionParticipant");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

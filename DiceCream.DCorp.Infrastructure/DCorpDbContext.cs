@@ -74,7 +74,8 @@ namespace DiceCream.DCorp.Infrastructure
             builder.Entity<Session>()
                 .HasOne(s => s.DungeonMaster)
                 .WithMany(d => d.SessionDirected)
-                .HasForeignKey(s => s.DungeonMasterProfileId);
+                .HasForeignKey(s => s.DungeonMasterProfileId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Relation entre PlayerProfile et Statistic
             builder.Entity<PlayerProfile>()
@@ -94,15 +95,6 @@ namespace DiceCream.DCorp.Infrastructure
                 .HasOne(ps => ps.Skill)
                 .WithMany(s => s.AssignedToPlayers)  // Navigation dans Skill
                 .HasForeignKey(ps => ps.SkillId);
-
-            builder.Entity<Session>()
-                .HasOne(s => s.DungeonMaster)
-                .WithMany(dm => dm.SessionDirected)  // Le DM peut diriger plusieurs sessions
-                .HasForeignKey(s => s.DungeonMasterProfileId);
-
-            builder.Entity<Session>()
-                .HasMany(s => s.Participants)  // Participants est une collection de `User`
-                .WithMany(u => u.SessionHistory);  // User peut être dans plusieurs sessions
 
             builder.Entity<PlayerStatistic>()
                 .HasKey(ps => new { ps.PlayerProfileId, ps.StatisticId });

@@ -28,4 +28,8 @@
     <ProjectReference Include="..\DiceCream.DCorp.Domain\DiceCream.DCorp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

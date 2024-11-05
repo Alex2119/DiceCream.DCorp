@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiceCream.DCorp.Infrastructure.Migrations
 {
     [DbContext(typeof(DCorpDbContext))]
-    [Migration("20241104165104_InitialCreate")]
+    [Migration("20241105090742_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -510,19 +510,19 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SessionUser", b =>
+            modelBuilder.Entity("SessionParticipant", b =>
                 {
-                    b.Property<int>("ParticipantsId")
+                    b.Property<int>("SessionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SessionHistoryId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("ParticipantsId", "SessionHistoryId");
+                    b.HasKey("SessionId", "UserId");
 
-                    b.HasIndex("SessionHistoryId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("SessionUser");
+                    b.ToTable("SessionParticipant");
                 });
 
             modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.UserRole", b =>
@@ -629,7 +629,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.HasOne("DiceCream.DCorp.Domain.Entities.DungeonMasterProfile", "DungeonMaster")
                         .WithMany("SessionDirected")
                         .HasForeignKey("DungeonMasterProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DiceCream.DCorp.Domain.Entities.PlayerProfile", "PlayerProfiles")
@@ -686,18 +686,18 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SessionUser", b =>
+            modelBuilder.Entity("SessionParticipant", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("ParticipantsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DiceCream.DCorp.Domain.Entities.Session", null)
                         .WithMany()
-                        .HasForeignKey("SessionHistoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
