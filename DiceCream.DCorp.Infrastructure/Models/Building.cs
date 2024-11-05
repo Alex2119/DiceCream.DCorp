@@ -1,4 +1,5 @@
-﻿namespace DiceCream.DCorp.Domain.Entities;
+﻿namespace DiceCream.DCorp.Infrastructure.Models;
+
 public class Building
 {
     public int Id { get; set; }

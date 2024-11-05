@@ -1,4 +1,4 @@
-﻿namespace DiceCream.DCorp.Domain.Entities;
+﻿namespace DiceCream.DCorp.Infrastructure.Models;
 public class PlayerProfile
 {
     public int Id { get; set; }

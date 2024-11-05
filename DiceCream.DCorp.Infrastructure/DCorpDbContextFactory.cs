@@ -1,25 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
+﻿namespace DiceCream.DCorp.Infrastructure;
 
-namespace DiceCream.DCorp.Infrastructure
+public class DCorpDbContextFactory : IDesignTimeDbContextFactory<DCorpDbContext>
 {
-    public class DCorpDbContextFactory : IDesignTimeDbContextFactory<DCorpDbContext>
+    public DCorpDbContext CreateDbContext(string[] args)
     {
-        public DCorpDbContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<DCorpDbContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<DCorpDbContext>();
 
-            // Charger la configuration depuis le fichier appsettings.json
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+        // Charger la configuration depuis le fichier appsettings.json
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
 
-            var connectionString = configuration.GetConnectionString("DbConnection");
-            optionsBuilder.UseSqlServer(connectionString);
+        var connectionString = configuration.GetConnectionString("DbConnection");
+        optionsBuilder.UseSqlServer(connectionString);
 
-            return new DCorpDbContext(optionsBuilder.Options);
-        }
+        return new DCorpDbContext(optionsBuilder.Options);
     }
 }
