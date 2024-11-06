@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Application.Lib", "DiceCream.DCorp.Application.Lib\DiceCream.DCorp.Application.Lib.csproj", "{461EB3CE-0259-449B-BC47-AC7B6E4DC766}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Application.DTO", "DiceCream.DCorp.Application.DTO\DiceCream.DCorp.Application.DTO.csproj", "{EFC631B0-83B9-438A-BCE8-39216A1471F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{461EB3CE-0259-449B-BC47-AC7B6E4DC766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{461EB3CE-0259-449B-BC47-AC7B6E4DC766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{461EB3CE-0259-449B-BC47-AC7B6E4DC766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFC631B0-83B9-438A-BCE8-39216A1471F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFC631B0-83B9-438A-BCE8-39216A1471F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFC631B0-83B9-438A-BCE8-39216A1471F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFC631B0-83B9-438A-BCE8-39216A1471F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

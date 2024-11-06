@@ -11,6 +11,13 @@ public class Repository : IRepository
 
     public IEnumerable<Player> GetPlayers()
     {
-        return (IEnumerable<Player>)_context.PlayerSkills;
+        return (IEnumerable<Player>)_context.PlayerProfiles;
+    }
+
+    public async Task<Player> GetPlayerByIdAsync(int id)
+    {
+        return await _context.Player.Include(p => p.PlayerProfile)
+                                     .Include(p => p.PlayerSkills)
+                                     .FirstOrDefaultAsync(p => p.PlayerProfile.Id == id);
     }
 }
