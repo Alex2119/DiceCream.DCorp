@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DiceCream.DCorp.Domain\DiceCream.DCorp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DiceCream.DCorp.Application.DTO\DiceCream.DCorp.Application.DTO.csproj" />
     <ProjectReference Include="..\DiceCream.DCorp.Domain\DiceCream.DCorp.Domain.csproj" />
     <ProjectReference Include="..\DiceCream.DCorp.Infrastructure\DiceCream.DCorp.Infrastructure.csproj" />
   </ItemGroup>
