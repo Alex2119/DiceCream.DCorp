@@ -2,9 +2,8 @@
 
 public class Game
 {
-    public Building Building { get; set; }
-    public Session Session { get; set; }
-    public Rule Rule { get; set; }
-    public Skill Skill { get; set; }
-    public Statistic Statistic { get; set; }
 }
+
+// C'est un peu complexe donc on va juste laisser comme ça pour l'instant
+// On verra plus tard pour définir les domaines
+// Ca sera juste une Clean Architecture pour l'instant sans DDD

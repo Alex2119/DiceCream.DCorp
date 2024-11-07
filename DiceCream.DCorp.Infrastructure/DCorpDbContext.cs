@@ -1,4 +1,6 @@
-﻿namespace DiceCream.DCorp.Infrastructure;
+﻿using DiceCream.DCorp.Infrastructure.Models;
+
+namespace DiceCream.DCorp.Infrastructure;
 public class DCorpDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<User, Role, int>
 {
     public DCorpDbContext(DbContextOptions<DCorpDbContext> options) : base(options) { }

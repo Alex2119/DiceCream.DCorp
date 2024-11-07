@@ -1,4 +1,4 @@
-﻿namespace DiceCream.DCorp.Application.Lib.Handlers;
+﻿namespace DiceCream.DCorp.Application.Handlers;
 public class GetPlayersQueryHandler : IRequestHandler<GetPlayersQuery, IEnumerable<Player>>
 {
     private readonly IRepository _repository;

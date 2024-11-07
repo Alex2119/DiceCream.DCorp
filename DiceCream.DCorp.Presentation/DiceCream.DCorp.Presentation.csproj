@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiceCream.DCorp.Application.Lib\DiceCream.DCorp.Application.Lib.csproj" />
+    <ProjectReference Include="..\DiceCream.DCorp.Application.Lib\DiceCream.DCorp.Application.csproj" />
     <ProjectReference Include="..\DiceCream.DCorp.Infrastructure\DiceCream.DCorp.Infrastructure.csproj" />
   </ItemGroup>
 

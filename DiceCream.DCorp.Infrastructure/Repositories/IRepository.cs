@@ -1,4 +1,6 @@
-﻿namespace DiceCream.DCorp.Infrastructure.Repositories;
+﻿using DiceCream.DCorp.Infrastructure.Models;
+
+namespace DiceCream.DCorp.Infrastructure.Repositories;
 
 public interface IRepository
 {

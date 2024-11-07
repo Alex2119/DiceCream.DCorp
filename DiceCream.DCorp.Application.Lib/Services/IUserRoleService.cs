@@ -1,4 +1,6 @@
-﻿namespace DiceCream.DCorp.Application.Lib.Services;
+﻿using DiceCream.DCorp.Infrastructure.Models;
+
+namespace DiceCream.DCorp.Application.Services;
 
 public interface IUserRoleService
 {

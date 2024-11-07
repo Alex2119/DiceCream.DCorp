@@ -1,4 +1,6 @@
-﻿namespace DiceCream.DCorp.Application.Lib.Handlers;
+﻿using DiceCream.DCorp.Application.Extensions;
+
+namespace DiceCream.DCorp.Application.Handlers;
 
 public class GetPlayerQueryHandler : IRequestHandler<GetPlayerQuery, PlayerDTO>
 {
@@ -12,26 +14,11 @@ public class GetPlayerQueryHandler : IRequestHandler<GetPlayerQuery, PlayerDTO>
     public async Task<PlayerDTO> Handle(GetPlayerQuery request, CancellationToken cancellationToken)
     {
         var player = await _playerRepository.GetPlayerByIdAsync(request.PlayerId);
-        if(player == null)
+        if(player is null)
         {
             return null;
         }
-
-        var playerDto = new PlayerDTO
-        {
-            Id = player.Id,
-            Nickname = player.Nickname,
-            Level = player.Level,
-            Xp = player.Xp,
-            AcquiredSkills = player.PlayerSkills.Select(ps => new SkillDTO
-            {
-                Id = ps.Skill.Id,
-                Name = ps.Skill.Name,
-                Effect = ps.Skill.Effect,
-                IsPermanent = ps.Skill.IsPermanent
-            }).ToList()
-        };
-
-        return playerDto;
+        // Tjrs avec les DTOs
+        return player.ToDTO();
     }
 }

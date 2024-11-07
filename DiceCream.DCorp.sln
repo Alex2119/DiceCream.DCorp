@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiceCream.DCorp.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Presentation", "DiceCream.DCorp.Presentation\DiceCream.DCorp.Presentation.csproj", "{60B69943-801B-4668-9245-5EBF8D127B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Application.Lib", "DiceCream.DCorp.Application.Lib\DiceCream.DCorp.Application.Lib.csproj", "{461EB3CE-0259-449B-BC47-AC7B6E4DC766}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Application", "DiceCream.DCorp.Application.Lib\DiceCream.DCorp.Application.csproj", "{461EB3CE-0259-449B-BC47-AC7B6E4DC766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.Application.DTO", "DiceCream.DCorp.Application.DTO\DiceCream.DCorp.Application.DTO.csproj", "{EFC631B0-83B9-438A-BCE8-39216A1471F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceCream.DCorp.DTO", "DiceCream.DCorp.Application.DTO\DiceCream.DCorp.DTO.csproj", "{EFC631B0-83B9-438A-BCE8-39216A1471F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

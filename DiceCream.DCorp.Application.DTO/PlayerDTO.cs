@@ -6,7 +6,7 @@ public class PlayerDTO
     public string Nickname { get; set; }
     public int Level { get; set; }
     public int Xp { get; set; }
-    public List<SkillDTO> AcquiredSkills { get; set; } = new();
-    public List<SessionDTO> SessionHistory { get; set; } = new();
+    public IReadOnlyList<SkillDTO>? AcquiredSkills { get; set; }
+    public IReadOnlyList<SessionDTO>? SessionHistory { get; set; }
     public StatisticDTO Stats { get; set; }
 }
