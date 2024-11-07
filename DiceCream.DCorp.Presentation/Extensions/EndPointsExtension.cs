@@ -1,4 +1,4 @@
-﻿using DiceCream.DCorp.Application.Lib.Queries;
+﻿using DiceCream.DCorp.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

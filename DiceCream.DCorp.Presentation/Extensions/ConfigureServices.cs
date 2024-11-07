@@ -1,6 +1,6 @@
-﻿using DiceCream.DCorp.Application.Lib.Handlers;
-using DiceCream.DCorp.Infrastructure.Repositories;
+﻿using DiceCream.DCorp.Application.Handlers;
 using DiceCream.DCorp.Infrastructure;
+using DiceCream.DCorp.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiceCream.DCorp.Presentation.Extensions;

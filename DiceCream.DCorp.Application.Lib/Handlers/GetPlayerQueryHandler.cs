@@ -1,4 +1,5 @@
 ﻿using DiceCream.DCorp.Application.Extensions;
+using DiceCream.DCorp.Application.Queries;
 
 namespace DiceCream.DCorp.Application.Handlers;
 
