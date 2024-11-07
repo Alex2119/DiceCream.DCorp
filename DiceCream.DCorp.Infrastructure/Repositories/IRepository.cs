@@ -3,4 +3,6 @@
 public interface IRepository
 {
     IEnumerable<Player> GetPlayers();
+    Task<PlayerProfile> GetPlayerByIdAsync(int playerId);
+
 }

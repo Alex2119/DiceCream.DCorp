@@ -14,10 +14,12 @@ public class Repository : IRepository
         return (IEnumerable<Player>)_context.PlayerProfiles;
     }
 
-    public async Task<Player> GetPlayerByIdAsync(int id)
+    public async Task<PlayerProfile> GetPlayerByIdAsync(int playerId)
     {
-        return await _context.Player.Include(p => p.PlayerProfile)
-                                     .Include(p => p.PlayerSkills)
-                                     .FirstOrDefaultAsync(p => p.PlayerProfile.Id == id);
+        return await _context.PlayerProfiles
+            .Include(p => p.PlayerSkills)
+            .ThenInclude(ps => ps.Skill)
+            .FirstOrDefaultAsync(p => p.Id == playerId);
     }
+
 }

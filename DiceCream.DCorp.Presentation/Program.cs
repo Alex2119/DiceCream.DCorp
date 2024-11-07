@@ -35,5 +35,10 @@ app.MapGet("/getPlayers", ([FromServices] ISender sender) =>
 {
     return sender.Send(new GetPlayersQuery());
 });
+app.MapGet("/players/{id}", async (int id, ISender sender) =>
+{
+    var playerDto = await sender.Send(new GetPlayerQuery(id));
+    return playerDto != null ? Results.Ok(playerDto) : Results.NotFound();
+});
 
 await app.RunAsync();
