@@ -1,8 +1,4 @@
-﻿using DiceCream.DCorp.Application.Queries;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DiceCream.DCorp.Presentation.Extensions;
+﻿namespace DiceCream.DCorp.Presentation.Extensions;
 
 public static class EndPointsExtension
 {
@@ -15,7 +11,7 @@ public static class EndPointsExtension
         app.MapGet("/players/{id}", async (int id, ISender sender) =>
         {
             var playerDto = await sender.Send(new GetPlayerQuery(id));
-            return playerDto is null ? Results.Ok(playerDto) : Results.NotFound(); // Très bien utilisé le Result Pattern
+            return playerDto is null ? Results.Ok(playerDto) : Results.NotFound();
         });
     }
 }

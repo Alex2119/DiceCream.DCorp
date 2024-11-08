@@ -24,4 +24,8 @@ public class Repository : IRepository
             .FirstOrDefaultAsync(p => p.Id == playerId);
     }
 
+    Task<PlayerProfile> IRepository.GetPlayerByIdAsync(int playerId)
+    {
+        throw new NotImplementedException();
+    }
 }
