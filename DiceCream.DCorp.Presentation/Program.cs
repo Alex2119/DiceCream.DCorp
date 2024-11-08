@@ -1,3 +1,4 @@
+using DiceCream.DCorp.Presentation;
 using DiceCream.DCorp.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ if(app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.AddEndPoints();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 await app.RunAsync();
 
