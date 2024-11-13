@@ -71,6 +71,22 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Skills",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Effect = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Universe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsPermanent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Skills", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Statistics",
                 columns: table => new
                 {
@@ -156,7 +172,9 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false)
+                    Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    UserId1 = table.Column<int>(type: "int", nullable: true),
+                    RoleId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,8 +186,20 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId1",
+                        column: x => x.RoleId1,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -229,7 +259,8 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     Xp = table.Column<int>(type: "int", nullable: false),
                     Sp = table.Column<int>(type: "int", nullable: false),
                     Hp = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Stats_Capacity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -275,41 +306,15 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModification = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                    DungeonMasterProfileId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rules_DungeonMasterProfiles_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_Rules_DungeonMasterProfiles_DungeonMasterProfileId",
+                        column: x => x.DungeonMasterProfileId,
                         principalTable: "DungeonMasterProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PlayerStatistic",
-                columns: table => new
-                {
-                    PlayerProfileId = table.Column<int>(type: "int", nullable: false),
-                    StatisticId = table.Column<int>(type: "int", nullable: false),
-                    AquisitionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Value = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PlayerStatistic", x => new { x.PlayerProfileId, x.StatisticId });
-                    table.ForeignKey(
-                        name: "FK_PlayerStatistic_PlayerProfiles_PlayerProfileId",
-                        column: x => x.PlayerProfileId,
-                        principalTable: "PlayerProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PlayerStatistic_Statistics_StatisticId",
-                        column: x => x.StatisticId,
-                        principalTable: "Statistics",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -321,68 +326,48 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PlayerProfilesId = table.Column<int>(type: "int", nullable: false),
                     DungeonMasterProfileId = table.Column<int>(type: "int", nullable: false),
-                    Feedback = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Feedback = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sessions", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Sessions_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Sessions_DungeonMasterProfiles_DungeonMasterProfileId",
                         column: x => x.DungeonMasterProfileId,
                         principalTable: "DungeonMasterProfiles",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Sessions_PlayerProfiles_PlayerProfilesId",
-                        column: x => x.PlayerProfilesId,
-                        principalTable: "PlayerProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Skills",
+                name: "PlayerSkill",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Effect = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Universe = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsPermanent = table.Column<bool>(type: "bit", nullable: false),
-                    PlayerProfileId = table.Column<int>(type: "int", nullable: true)
+                    PlayerProfileId = table.Column<int>(type: "int", nullable: false),
+                    SkillId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Skills", x => x.Id);
+                    table.PrimaryKey("PK_PlayerSkill", x => new { x.PlayerProfileId, x.SkillId });
                     table.ForeignKey(
-                        name: "FK_Skills_PlayerProfiles_PlayerProfileId",
+                        name: "FK_PlayerSkill_PlayerProfiles_PlayerProfileId",
                         column: x => x.PlayerProfileId,
                         principalTable: "PlayerProfiles",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SessionParticipant",
-                columns: table => new
-                {
-                    SessionId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SessionParticipant", x => new { x.SessionId, x.UserId });
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SessionParticipant_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SessionParticipant_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
-                        principalColumn: "Id");
+                        name: "FK_PlayerSkill_Skills_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -407,6 +392,30 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                         name: "FK_PlayerSkills_Skills_SkillId",
                         column: x => x.SkillId,
                         principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlayerSession",
+                columns: table => new
+                {
+                    PlayerProfileId = table.Column<int>(type: "int", nullable: false),
+                    SessionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerSession", x => new { x.PlayerProfileId, x.SessionId });
+                    table.ForeignKey(
+                        name: "FK_PlayerSession_PlayerProfiles_PlayerProfileId",
+                        column: x => x.PlayerProfileId,
+                        principalTable: "PlayerProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlayerSession_Sessions_SessionId",
+                        column: x => x.SessionId,
+                        principalTable: "Sessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -439,6 +448,16 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId1",
+                table: "AspNetUserRoles",
+                column: "RoleId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_UserId1",
+                table: "AspNetUserRoles",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -468,24 +487,24 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlayerSession_SessionId",
+                table: "PlayerSession",
+                column: "SessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerSkill_SkillId",
+                table: "PlayerSkill",
+                column: "SkillId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlayerSkills_SkillId",
                 table: "PlayerSkills",
                 column: "SkillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerStatistic_StatisticId",
-                table: "PlayerStatistic",
-                column: "StatisticId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rules_AuthorId",
+                name: "IX_Rules_DungeonMasterProfileId",
                 table: "Rules",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SessionParticipant_UserId",
-                table: "SessionParticipant",
-                column: "UserId");
+                column: "DungeonMasterProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_DungeonMasterProfileId",
@@ -493,14 +512,9 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 column: "DungeonMasterProfileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sessions_PlayerProfilesId",
+                name: "IX_Sessions_UserId",
                 table: "Sessions",
-                column: "PlayerProfilesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Skills_PlayerProfileId",
-                table: "Skills",
-                column: "PlayerProfileId");
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -525,16 +539,19 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 name: "PlayerBuildingContributions");
 
             migrationBuilder.DropTable(
-                name: "PlayerSkills");
+                name: "PlayerSession");
 
             migrationBuilder.DropTable(
-                name: "PlayerStatistic");
+                name: "PlayerSkill");
+
+            migrationBuilder.DropTable(
+                name: "PlayerSkills");
 
             migrationBuilder.DropTable(
                 name: "Rules");
 
             migrationBuilder.DropTable(
-                name: "SessionParticipant");
+                name: "Statistics");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -543,19 +560,16 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                 name: "Buildings");
 
             migrationBuilder.DropTable(
-                name: "Skills");
-
-            migrationBuilder.DropTable(
-                name: "Statistics");
-
-            migrationBuilder.DropTable(
                 name: "Sessions");
 
             migrationBuilder.DropTable(
-                name: "DungeonMasterProfiles");
+                name: "PlayerProfiles");
 
             migrationBuilder.DropTable(
-                name: "PlayerProfiles");
+                name: "Skills");
+
+            migrationBuilder.DropTable(
+                name: "DungeonMasterProfiles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

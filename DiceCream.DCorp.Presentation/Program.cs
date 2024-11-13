@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddServices(builder.Configuration);
 builder.Services.AddProblemDetails(options =>
 {
@@ -37,8 +39,5 @@ if(app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.AddEndPoints();
-
-app.UseExceptionHandler();
-
 
 await app.RunAsync();

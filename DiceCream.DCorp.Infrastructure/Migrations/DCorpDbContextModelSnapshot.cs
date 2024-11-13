@@ -22,7 +22,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Building", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Building", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("Buildings");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.DungeonMasterProfile", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.DungeonMasterProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +78,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("DungeonMasterProfiles");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerBuildingContribution", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.PlayerBuildingContribution", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -96,7 +96,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("PlayerBuildingContributions");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerProfile", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.PlayerProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("PlayerProfiles");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerSkill", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.PlayerSkill", b =>
                 {
                     b.Property<int>("PlayerProfileId")
                         .HasColumnType("int");
@@ -159,28 +159,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("PlayerSkills");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerStatistic", b =>
-                {
-                    b.Property<int>("PlayerProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StatisticId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AquisitionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("PlayerProfileId", "StatisticId");
-
-                    b.HasIndex("StatisticId");
-
-                    b.ToTable("PlayerStatistic");
-                });
-
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Role", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -215,7 +194,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Rule", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Rule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -223,23 +202,23 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DungeonMasterProfileId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LastModification")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("DungeonMasterProfileId");
 
                     b.ToTable("Rules");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Session", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Session", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -268,7 +247,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Skill", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Skill", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,20 +264,15 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PlayerProfileId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Universe")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerProfileId");
-
                     b.ToTable("Skills");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Statistic", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Statistic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -329,7 +303,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("Statistics");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.User", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -481,6 +455,8 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("AspNetUserRoles", (string)null);
 
                     b.HasDiscriminator().HasValue("IdentityUserRole<int>");
@@ -507,50 +483,73 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PlayerProfileSession", b =>
+            modelBuilder.Entity("PlayerSession", b =>
                 {
-                    b.Property<int>("ParticipantsId")
+                    b.Property<int>("PlayerProfileId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SessionHistoryId")
+                    b.Property<int>("SessionId")
                         .HasColumnType("int");
 
-                    b.HasKey("ParticipantsId", "SessionHistoryId");
+                    b.HasKey("PlayerProfileId", "SessionId");
 
-                    b.HasIndex("SessionHistoryId");
+                    b.HasIndex("SessionId");
 
-                    b.ToTable("PlayerProfileSession");
+                    b.ToTable("PlayerSession");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("PlayerSkill", b =>
+                {
+                    b.Property<int>("PlayerProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayerProfileId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("PlayerSkill");
+                });
+
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.UserRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<int>");
 
-                    b.HasIndex("RoleId");
+                    b.Property<int>("RoleId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId1")
+                        .HasColumnType("int");
+
+                    b.HasIndex("RoleId1");
+
+                    b.HasIndex("UserId1");
 
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.DungeonMasterProfile", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.DungeonMasterProfile", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", "User")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", "User")
                         .WithOne("DungeonMasterProfile")
-                        .HasForeignKey("DiceCream.DCorp.Domain.Entities.DungeonMasterProfile", "UserId")
+                        .HasForeignKey("DiceCream.DCorp.Infrastructure.Models.DungeonMasterProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerBuildingContribution", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.PlayerBuildingContribution", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.Building", "Building")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.Building", "Building")
                         .WithMany("PlayerContributions")
                         .HasForeignKey("BuildingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", "User")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", "User")
                         .WithMany("PlayerBuildingContributions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -561,26 +560,45 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerProfile", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.PlayerProfile", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", "User")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", "User")
                         .WithOne("PlayerProfile")
-                        .HasForeignKey("DiceCream.DCorp.Domain.Entities.PlayerProfile", "UserId")
+                        .HasForeignKey("DiceCream.DCorp.Infrastructure.Models.PlayerProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("System.Collections.Generic.List<DiceCream.DCorp.Infrastructure.Models.PlayerStatistic>", "Stats", b1 =>
+                        {
+                            b1.Property<int>("PlayerProfileId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Capacity")
+                                .HasColumnType("int");
+
+                            b1.HasKey("PlayerProfileId");
+
+                            b1.ToTable("PlayerProfiles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PlayerProfileId");
+                        });
+
+                    b.Navigation("Stats")
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerSkill", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.PlayerSkill", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.PlayerProfile", "PlayerProfile")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.PlayerProfile", "PlayerProfile")
                         .WithMany("PlayerSkills")
                         .HasForeignKey("PlayerProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.Skill", "Skill")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.Skill", "Skill")
                         .WithMany("AssignedToPlayers")
                         .HasForeignKey("SkillId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -591,61 +609,35 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerStatistic", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Rule", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.PlayerProfile", "PlayerProfile")
-                        .WithMany("Stats")
-                        .HasForeignKey("PlayerProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.Statistic", "Statistic")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.DungeonMasterProfile", "Author")
                         .WithMany()
-                        .HasForeignKey("StatisticId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PlayerProfile");
-
-                    b.Navigation("Statistic");
-                });
-
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Rule", b =>
-                {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.DungeonMasterProfile", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
+                        .HasForeignKey("DungeonMasterProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Session", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Session", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.DungeonMasterProfile", "DungeonMaster")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.DungeonMasterProfile", "DungeonMaster")
                         .WithMany("SessionDirected")
                         .HasForeignKey("DungeonMasterProfileId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", null)
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", null)
                         .WithMany("SessionHistory")
                         .HasForeignKey("UserId");
 
                     b.Navigation("DungeonMaster");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Skill", b =>
-                {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.PlayerProfile", null)
-                        .WithMany("AcquiredSkills")
-                        .HasForeignKey("PlayerProfileId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.Role", null)
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -654,7 +646,7 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", null)
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -663,7 +655,22 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", null)
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -672,39 +679,54 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", null)
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PlayerProfileSession", b =>
+            modelBuilder.Entity("PlayerSession", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.PlayerProfile", null)
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.PlayerProfile", null)
                         .WithMany()
-                        .HasForeignKey("ParticipantsId")
+                        .HasForeignKey("PlayerProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.Session", null)
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.Session", null)
                         .WithMany()
-                        .HasForeignKey("SessionHistoryId")
+                        .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("PlayerSkill", b =>
                 {
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.PlayerProfile", null)
+                        .WithMany()
+                        .HasForeignKey("PlayerProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiceCream.DCorp.Domain.Entities.User", "User")
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.Skill", null)
+                        .WithMany()
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.UserRole", b =>
+                {
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.Role", "Role")
                         .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("RoleId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DiceCream.DCorp.Infrastructure.Models.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -713,36 +735,32 @@ namespace DiceCream.DCorp.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Building", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Building", b =>
                 {
                     b.Navigation("PlayerContributions");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.DungeonMasterProfile", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.DungeonMasterProfile", b =>
                 {
                     b.Navigation("SessionDirected");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.PlayerProfile", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.PlayerProfile", b =>
                 {
-                    b.Navigation("AcquiredSkills");
-
                     b.Navigation("PlayerSkills");
-
-                    b.Navigation("Stats");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Role", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Role", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.Skill", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.Skill", b =>
                 {
                     b.Navigation("AssignedToPlayers");
                 });
 
-            modelBuilder.Entity("DiceCream.DCorp.Domain.Entities.User", b =>
+            modelBuilder.Entity("DiceCream.DCorp.Infrastructure.Models.User", b =>
                 {
                     b.Navigation("DungeonMasterProfile")
                         .IsRequired();

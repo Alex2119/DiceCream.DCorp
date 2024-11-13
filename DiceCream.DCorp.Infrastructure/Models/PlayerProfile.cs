@@ -14,5 +14,5 @@ public class PlayerProfile
     public int UserId { get; set; }
     public User User { get; set; }
     public List<PlayerSkill> PlayerSkills { get; set; }
-    public ICollection<PlayerStatistic> Stats { get; set; }
+    public List<PlayerStatistic> Stats { get; set; } = new List<PlayerStatistic>();
 }
