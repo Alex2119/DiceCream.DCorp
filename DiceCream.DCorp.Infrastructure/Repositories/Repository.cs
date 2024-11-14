@@ -1,4 +1,5 @@
-﻿using DiceCream.DCorp.Infrastructure.Models;
+﻿using DiceCream.DCorp.Application.DTO;
+using DiceCream.DCorp.Infrastructure.Models;
 
 namespace DiceCream.DCorp.Infrastructure.Repositories;
 
@@ -11,12 +12,26 @@ public class Repository : IRepository
         _context = context;
     }
 
-    public IEnumerable<Player> GetPlayers()
+    public IEnumerable<PlayerDTO> GetPlayers()
     {
-        return (IEnumerable<Player>)_context.PlayerProfiles;
+        return [.. _context.PlayerProfiles
+            .Select(p => new PlayerDTO
+            {
+                Id = p.Id,
+                Nickname = p.Nickname,
+                Level = p.Level,
+                AcquiredSkills = p.AcquiredSkills.Select(ps => new SkillDTO
+                {
+                    Id = ps.Id,
+                    Name = ps.Name ?? string.Empty,
+                    Effect = ps.Effect ?? string.Empty,
+                    IsPermanent = ps.IsPermanent,
+                })
+                .ToList()
+            })];
     }
 
-    public async Task<PlayerProfile> GetPlayerByIdAsync(int playerId)
+    public async Task<PlayerProfile?> GetPlayerByIdAsync(int playerId)
     {
         return await _context.PlayerProfiles
             .Include(p => p.PlayerSkills)

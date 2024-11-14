@@ -19,7 +19,6 @@ public class GetPlayerQueryHandler : IRequestHandler<GetPlayerQuery, PlayerDTO>
         {
             return null;
         }
-        // Tjrs avec les DTOs
         return player.ToDTO();
     }
 }

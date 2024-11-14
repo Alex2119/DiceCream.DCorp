@@ -12,7 +12,7 @@ public static class MapperDTO
             Nickname = playerProfile.Nickname,
             Level = playerProfile.Level,
             Xp = playerProfile.Xp,
-            // A faire via une methode d'extension (y'aura du yield)
+            // A faire via une méthode d'extension (y'aura du yield)
             AcquiredSkills = playerProfile.PlayerSkills.Select(ps => new SkillDTO
             {
                 Id = ps.Skill.Id,
