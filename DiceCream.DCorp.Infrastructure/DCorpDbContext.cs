@@ -1,15 +1,18 @@
 ﻿using DiceCream.DCorp.Infrastructure.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DiceCream.DCorp.Infrastructure;
-public class DCorpDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<User, Role, int>
+public class DCorpDbContext : IdentityDbContext<User, Role, int>
 {
     public DCorpDbContext(DbContextOptions<DCorpDbContext> options) : base(options) { }
+
     public DbSet<Building> Buildings { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<Skill> Skills { get; set; }
     public DbSet<Statistic> Statistics { get; set; }
     public DbSet<Rule> Rules { get; set; }
+    public DbSet<IdentityUserRole<int>> IdentityUserRole { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<PlayerBuildingContribution> PlayerBuildingContributions { get; set; }
     public DbSet<PlayerSkill> PlayerSkills { get; set; }
     public DbSet<PlayerProfile> PlayerProfiles { get; set; }
@@ -17,6 +20,21 @@ public class DCorpDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
+        //// User to Role
+        //modelBuilder.Entity<IdentityUserRole<int>>()
+        //    .HasOne<IdentityRole<int>>()
+        //    .WithMany()
+        //    .HasForeignKey(ur => ur.RoleId)
+        //    .OnDelete(DeleteBehavior.Cascade);
+
+        //modelBuilder.Entity<IdentityUserRole<int>>()
+        //    .HasOne<IdentityUser<int>>()
+        //    .WithMany()
+        //    .HasForeignKey(ur => ur.UserId)
+        //    .OnDelete(DeleteBehavior.Cascade);
+
         // PlayerProfile to Session (historique des sessions)
         modelBuilder.Entity<PlayerProfile>()
             .HasMany(p => p.SessionHistory)
@@ -56,10 +74,6 @@ public class DCorpDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.
             .WithMany()
             .HasForeignKey(r => r.DungeonMasterProfileId);
 
-        // Role setup
-        modelBuilder.Entity<Role>()
-            .HasKey(r => r.Id);
-
         // PlayerProfile to Statistic (characteristics)
         modelBuilder.Entity<PlayerProfile>()
             .OwnsOne(p => p.Stats);
@@ -71,7 +85,5 @@ public class DCorpDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.
         // PlayerProfile to Skill (compétences temporaires)
         modelBuilder.Entity<PlayerSkill>()
             .HasKey(ps => new { ps.PlayerProfileId, ps.SkillId });
-
-        base.OnModelCreating(modelBuilder);
     }
 }
