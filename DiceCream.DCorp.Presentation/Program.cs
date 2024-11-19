@@ -1,15 +1,15 @@
-using Hellang.Middleware.ProblemDetails;
+using DiceCream.DCorp.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuration des services
-builder.Services.AddServices(builder.Configuration);
+builder.Services.AddProblemDetails();
+builder.Services.AddServices(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
+app.UseProblemDetails();
 // Configuration du pipeline de requêtes HTTP
 app.ConfigureMiddleware();
-
-app.UseProblemDetails(); //Un pti souci, j'ai pas capté
 
 await app.RunAsync();

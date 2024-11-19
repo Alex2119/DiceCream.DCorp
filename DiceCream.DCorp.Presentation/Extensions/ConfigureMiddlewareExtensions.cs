@@ -3,8 +3,6 @@ public static class ConfigureMiddlewareExtensions
 {
     public static void ConfigureMiddleware(this WebApplication app)
     {
-        // Utilisation de ProblemDetails
-
         // Configuration du pipeline de requêtes HTTP
         if(app.Environment.IsDevelopment())
         {

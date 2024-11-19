@@ -7,5 +7,3 @@ global using DiceCream.DCorp.Infrastructure;
 global using DiceCream.DCorp.Infrastructure.Repositories;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
-
-
