@@ -6,4 +6,5 @@ global using DiceCream.DCorp.Application.Handlers;
 global using DiceCream.DCorp.Infrastructure;
 global using DiceCream.DCorp.Infrastructure.Repositories;
 global using Microsoft.EntityFrameworkCore;
-global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Builder;
