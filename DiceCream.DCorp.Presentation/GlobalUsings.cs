@@ -1,10 +1,11 @@
-﻿global using DiceCream.DCorp.Presentation.Extensions;
-global using MediatR;
-global using Microsoft.AspNetCore.Mvc;
+﻿global using DiceCream.DCorp.Application.Handlers;
 global using DiceCream.DCorp.Application.Queries;
-global using DiceCream.DCorp.Application.Handlers;
 global using DiceCream.DCorp.Infrastructure;
 global using DiceCream.DCorp.Infrastructure.Repositories;
-global using Microsoft.EntityFrameworkCore;
-global using Microsoft.AspNetCore.Http;
+global using DiceCream.DCorp.Presentation.Extensions;
+global using Hellang.Middleware.ProblemDetails;
+global using MediatR;
 global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;

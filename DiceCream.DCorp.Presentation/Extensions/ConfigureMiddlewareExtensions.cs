@@ -3,8 +3,9 @@ public static class ConfigureMiddlewareExtensions
 {
     public static void ConfigureMiddleware(this WebApplication app)
     {
+        app.UseProblemDetails();
         // Vérifiez si ProblemDetails est déjà configuré dans le pipeline
-        if(!app.Services.GetRequiredService<IServiceCollection>().Any(x => x.ServiceType.Name.Contains("ProblemDetails")))
+        if (!app.Services.GetRequiredService<IServiceCollection>().Any(x => x.ServiceType.Name.Contains("ProblemDetails")))
         {
             throw new InvalidOperationException("ProblemDetails must be added before calling UseProblemDetails.");
         }
