@@ -10,8 +10,9 @@ public class DCorpDbContextFactory : IDesignTimeDbContextFactory<DCorpDbContext>
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddUserSecrets(typeof(DCorpDbContext).Assembly)
             .Build();
-
+        
         var connectionString = configuration.GetConnectionString("DbConnection");
         if(string.IsNullOrEmpty(connectionString))
         {
